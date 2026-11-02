@@ -1,9 +1,59 @@
 #include <GL/glut.h>
+#include "cobra.h"
 
 #define LINHAS 20
 #define COLUNAS 20
 
-//----------------GRADE----------------
+// -------- COBRA --------
+
+Cobra cobra;
+
+void inicializa_cobra(void)
+{
+    cobra.tamanho = 3;
+
+    cobra.corpo[0].x = 10;
+    cobra.corpo[0].y = 10;
+
+    cobra.corpo[1].x = 9;
+    cobra.corpo[1].y = 10;
+
+    cobra.corpo[2].x = 8;
+    cobra.corpo[2].y = 10;
+}
+
+void desenha_cobra(void)
+{
+    int i;
+    float x;
+    float y;
+    float tamanho;
+
+    tamanho = 2.0f / COLUNAS;
+
+    /* Verde */
+    glColor3f(0.0f, 0.7f, 0.0f);
+
+    for(i = 0; i < cobra.tamanho; i++)
+    {
+        x = -1.0f + cobra.corpo[i].x * tamanho;
+        y = -1.0f + cobra.corpo[i].y * tamanho;
+
+        glBegin(GL_QUADS);
+
+            glVertex2f(x, y);
+
+            glVertex2f(x + tamanho, y);
+
+            glVertex2f(x + tamanho, y + tamanho);
+
+            glVertex2f(x, y + tamanho);
+
+        glEnd();
+    }
+}
+
+// -------- GRADE --------
 
 void desenha_grade(void)
 {
@@ -11,7 +61,7 @@ void desenha_grade(void)
     float x;
     float y;
 
-    // COR CINZA CLARO
+    // COR CINZA CLARA
     glColor3f(0.8f, 0.8f, 0.8f);
 
     glBegin(GL_LINES);
@@ -37,7 +87,7 @@ void desenha_grade(void)
     glEnd();
 }
 
-//----------------TELA----------------
+// -------- TELA --------
 
 void desenha(void)
 {
@@ -45,10 +95,12 @@ void desenha(void)
 
     desenha_grade();
 
+    desenha_cobra();
+
     glutSwapBuffers();
 }
 
-//----------------FUNCAO PRINCIPAL---------------- 
+// -------- FUNCAO PRINCIPAL --------
 
 int main(int argc, char *argv[])
 {
@@ -61,6 +113,8 @@ int main(int argc, char *argv[])
     glutCreateWindow("Jogo da Cobrinha");
 
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+    inicializa_cobra();
 
     glutDisplayFunc(desenha);
 
