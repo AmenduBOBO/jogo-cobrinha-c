@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "cobra.h"
 
+
 // -------- DEFINES --------
 
 #define LINHAS 20
@@ -14,6 +15,7 @@
 #define ESQUERDA 1
 #define CIMA 2
 #define BAIXO 3
+
 
 // -------- PONTUAÇÃO --------
 
@@ -103,6 +105,30 @@ void desenha_cobra(void)
 }
 
 
+// -------- COLISÃO E REINÍCIO --------
+
+int verifica_colisao(void)
+{
+    int i;
+    
+    for(i = 1; i < cobra.tamanho; i++)
+    {
+        if(cobra.corpo[0].x == cobra.corpo[i].x && cobra.corpo[0].y == cobra.corpo[i].y)
+        {
+            return 1; 
+        }
+    }
+    return 0; 
+}
+
+void reinicia_jogo(void)
+{
+    inicializa_cobra(); 
+    direcao = DIREITA;  
+    pontuacao = 0;      
+    gera_comida();      
+}
+
 // -------- MOVIMENTO --------
 
 void move_cobra(void)
@@ -131,18 +157,25 @@ void move_cobra(void)
         cobra.corpo[0].y--;
     }
     
-  if(cobra.corpo[0].x == comida_x &&
-   cobra.corpo[0].y == comida_y)
-{
-    cobra.corpo[cobra.tamanho] =
-        cobra.corpo[cobra.tamanho - 1];
+    if(verifica_colisao())
+    {
+        reinicia_jogo();
+        return; 
+    }
 
-    cobra.tamanho++;
+    if(cobra.corpo[0].x == comida_x &&
+       cobra.corpo[0].y == comida_y)
+    {
+        cobra.corpo[cobra.tamanho] =
+            cobra.corpo[cobra.tamanho - 1];
 
-    pontuacao++;
+        cobra.tamanho++;
 
-    gera_comida();
-}
+        pontuacao++;
+
+        gera_comida();
+    }
+
     if(cobra.corpo[0].x >= COLUNAS)
         cobra.corpo[0].x = 0;
 
