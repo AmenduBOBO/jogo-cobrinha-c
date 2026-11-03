@@ -13,4 +13,7 @@ typedef struct
     int tamanho;
 } Cobra;
 
+void inicializa_cobra(Cobra *c);
+int verifica_colisao(Cobra *c);
+
 #endif
