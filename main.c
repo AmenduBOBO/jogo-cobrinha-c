@@ -24,7 +24,7 @@ int direcao = DIREITA;
 int pontuacao = 0;
 int game_over = 0;
 int pausado = 0;
-
+int velocidade = 160;
 int comida_x;
 int comida_y;
 
@@ -154,7 +154,7 @@ void timer(int valor)
 {
     move_cobra();
     glutPostRedisplay();
-    glutTimerFunc(160, timer, 0);
+    glutTimerFunc(velocidade, timer, 0);
 }
 
 
@@ -171,17 +171,24 @@ void teclado_especial(int tecla, int x, int y)
 
 void teclado_normal(unsigned char tecla, int x, int y)
 {
-    if(tecla == 27) // ESC 
+    if(tecla == 27)
     {
         exit(0);
     }
-    if(tecla == 'p' || tecla == 'P') 
+
+    if(game_over)
+    {
+        return;
+    }
+
+    if(tecla == 'p' || tecla == 'P')
     {
         pausado = !pausado;
-        
+
         PlaySound(TEXT("sons/pause.wav"), NULL, SND_ASYNC | SND_FILENAME);
     }
 }
+
 
 
 void clique_mouse(int botao, int estado, int x, int y)
@@ -250,7 +257,7 @@ int main(int argc, char *argv[])
     glutSpecialFunc(teclado_especial);
     glutKeyboardFunc(teclado_normal);
     glutMouseFunc(clique_mouse);
-    glutTimerFunc(160, timer, 0);
+    glutTimerFunc(velocidade, timer, 0);
 
     glutMainLoop();
     return 0;
