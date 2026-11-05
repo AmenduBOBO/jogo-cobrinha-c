@@ -8,7 +8,10 @@
 #include <mmsystem.h>
 #include "cobra.h"
 #include "entrada.h"
+#include "config.h"
 #include <string.h>
+
+
 
 // -------- DEFINES --------
 
@@ -26,11 +29,12 @@ int direcao = DIREITA;
 int pontuacao = 0;
 int game_over = 0;
 int pausado = 0;
-int velocidade = 160;
+int velocidade = 0;
 int comida_x;
 int comida_y;
 char nome_jogador[16];
 int dificuldade = 2;
+Config config;
 
 // -------- COMIDA --------
 
@@ -246,6 +250,10 @@ void desenha(void)
 
 int main(int argc, char *argv[])
 {
+    //  CARREGAMENTO
+carregar_config(&config);
+velocidade = config.velocidade;
+
 
     //  MENU INICIAL 
     const char *rotulo[4] =
