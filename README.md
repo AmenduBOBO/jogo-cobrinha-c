@@ -55,7 +55,7 @@ PC:
 cd /c/Users/jose2/OneDrive/Desktop/jogo-cobrinha-c
 
 1-
-gcc main.c cobra.c -o snake.exe -lfreeglut -lopengl32 -lglu32 -lm -lwinmm
+gcc main.c cobra.c entrada.c -o snake.exe -lfreeglut -lopengl32 -lglu32 -lm -lwinmm
 
 2-
 ./snake.exe
