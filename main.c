@@ -7,6 +7,8 @@
 #include <windows.h> 
 #include <mmsystem.h>
 #include "cobra.h"
+#include "entrada.h"
+#include <string.h>
 
 // -------- DEFINES --------
 
@@ -27,6 +29,8 @@ int pausado = 0;
 int velocidade = 160;
 int comida_x;
 int comida_y;
+char nome_jogador[16];
+int dificuldade = 2;
 
 // -------- COMIDA --------
 
@@ -242,6 +246,81 @@ void desenha(void)
 
 int main(int argc, char *argv[])
 {
+
+    //  MENU INICIAL 
+    const char *rotulo[4] =
+{
+    "",
+    "facil",
+    "normal",
+    "dificil"
+};
+
+int velocidade_dificuldade[4] =
+{
+    0,
+    250,
+    160, // Velocidade da personalização de matricula
+    120
+};
+
+printf("========================\n");
+printf("   COBRINHA - MENU\n");
+printf("========================\n");
+
+if(!ler_linha(
+      "Nome do Jogador: ",
+      nome_jogador,
+      sizeof(nome_jogador)))
+{
+    fprintf(stderr,
+            "Entrada encerrada.\n");
+
+    return 1;
+}
+
+if(nome_jogador[0] == '\0')
+{
+    strcpy(nome_jogador,
+           "anonimo");
+}
+
+printf("\n");
+
+if(!ler_inteiro(
+      "Dificuldade (1=Facil, 2=Normal, 3=Dificil): ",
+      1,
+      3,
+      &dificuldade))
+{
+    fprintf(stderr,
+            "Entrada encerrada.\n");
+
+    return 1;
+}
+
+printf("\n----- RESUMO -----\n");
+
+printf("%-12s %s\n",
+       "Jogador:",
+       nome_jogador);
+
+printf("%-12s %d (%s)\n",
+       "Nivel:",
+       dificuldade,
+       rotulo[dificuldade]);
+
+printf("%-12s %d ms por passo\n",
+       "Velocidade:",
+       velocidade_dificuldade[dificuldade]);
+    
+velocidade = velocidade_dificuldade[dificuldade];
+
+printf("\nAbrindo o jogo...\n\n");
+
+
+//  INICIALIZAÇÃO DO GLUT 
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(600, 600);
