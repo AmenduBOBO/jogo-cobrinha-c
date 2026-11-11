@@ -7,6 +7,7 @@ typedef struct
     int y;
 } Segmento;
 
+
 typedef struct
 {
     Segmento corpo[100];

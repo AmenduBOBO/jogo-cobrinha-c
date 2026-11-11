@@ -1,5 +1,6 @@
 #include "cobra.h"
 
+
 void inicializa_cobra(Cobra *c)
 {
     c->tamanho = 3;
@@ -13,6 +14,7 @@ void inicializa_cobra(Cobra *c)
     c->corpo[2].x = 8;
     c->corpo[2].y = 10;
 }
+
 
 int verifica_colisao(Cobra *c)
 {

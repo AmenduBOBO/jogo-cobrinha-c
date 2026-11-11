@@ -2,6 +2,7 @@
 #include <string.h>
 #include "entrada.h"
 
+
 int ler_linha(const char *pergunta,
               char *destino,
               int tamanho)
@@ -31,6 +32,8 @@ int ler_linha(const char *pergunta,
 
     return 1;
 }
+
+//////////////////////////////
 
 int ler_inteiro(const char *pergunta,
                 int minimo,

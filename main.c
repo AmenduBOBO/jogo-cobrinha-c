@@ -9,6 +9,7 @@
 #include "cobra.h"
 #include "entrada.h"
 #include "config.h"
+#include "ranking.h"
 #include <string.h>
 
 
@@ -35,6 +36,8 @@ int comida_y;
 char nome_jogador[16];
 int dificuldade = 2;
 Config config;
+Jogador ranking[5];
+
 
 // -------- COMIDA --------
 
@@ -124,21 +127,43 @@ void move_cobra(void)
     else if(direcao == BAIXO) cobra.corpo[0].y--;
     
     
-    if(verifica_colisao(&cobra))
-    {
-        PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
-        game_over = 1;
-        return; 
-    }
+   if(verifica_colisao(&cobra))
+{
+    PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
+
+    atualizar_ranking(
+        ranking,
+        nome_jogador,
+        pontuacao);
+
+    salvar_ranking(ranking);
+
+    mostrar_ranking(ranking);
+
+    game_over = 1;
+
+    return;
+}
 
     
     if(cobra.corpo[0].x >= COLUNAS || cobra.corpo[0].x < 0 ||
-       cobra.corpo[0].y >= LINHAS || cobra.corpo[0].y < 0)
-    {
-        PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
-        game_over = 1;
-        return;
-    }
+   cobra.corpo[0].y >= LINHAS || cobra.corpo[0].y < 0)
+{
+    PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
+
+    atualizar_ranking(
+        ranking,
+        nome_jogador,
+        pontuacao);
+
+    salvar_ranking(ranking);
+
+    mostrar_ranking(ranking);
+
+    game_over = 1;
+
+    return;
+}
 
 
     if(cobra.corpo[0].x == comida_x && cobra.corpo[0].y == comida_y)
@@ -251,11 +276,12 @@ void desenha(void)
 int main(int argc, char *argv[])
 {
     //  CARREGAMENTO
-carregar_config(&config);
-velocidade = config.velocidade;
 
+carregar_config(&config);
+carregar_ranking(ranking);
 
     //  MENU INICIAL 
+
     const char *rotulo[4] =
 {
     "",
