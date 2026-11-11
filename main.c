@@ -1,4 +1,4 @@
-// -------- INCLUDES --------
+// ---------------- INCLUDES ----------------
 
 #include <GL/glut.h>
 #include <stdlib.h>
@@ -14,7 +14,7 @@
 
 
 
-// -------- DEFINES --------
+// ---------------- DEFINES ----------------
 
 #define LINHAS 20
 #define COLUNAS 20
@@ -23,7 +23,7 @@
 #define CIMA 2
 #define BAIXO 3
 
-// -------- ESTADO DO JOGO --------
+// ---------------- ESTADO DO JOGO ----------------
 
 Cobra cobra;
 int direcao = DIREITA;
@@ -37,9 +37,10 @@ char nome_jogador[16];
 int dificuldade = 2;
 Config config;
 Jogador ranking[5];
+int opcao;
 
 
-// -------- COMIDA --------
+// ---------------- COMIDA ----------------
 
 void gera_comida(void)
 {
@@ -68,7 +69,7 @@ void desenha_comida(void)
 }
 
 
-// -------- DESENHO DA COBRA --------
+// ---------------- DESENHO DA COBRA ----------------
 
 void desenha_cobra(void)
 {
@@ -95,7 +96,7 @@ void desenha_cobra(void)
 }
 
 
-// -------- REINICIO --------
+// ---------------- REINICIO ----------------
 
 void reinicia_jogo(void)
 {
@@ -107,8 +108,27 @@ void reinicia_jogo(void)
     game_over = 0;
 }
 
+void processa_game_over(void)
+{
+    PlaySound(
+        TEXT("sons/colisao.wav"),
+        NULL,
+        SND_ASYNC | SND_FILENAME);
 
-// -------- MOVIMENTO E COLISOES --------
+    atualizar_ranking(
+        ranking,
+        nome_jogador,
+        pontuacao);
+
+    salvar_ranking(ranking);
+
+    mostrar_ranking(ranking);
+
+    game_over = 1;
+}
+
+
+// ---------------- MOVIMENTO E COLISOES ----------------
 
 void move_cobra(void)
 {
@@ -126,46 +146,19 @@ void move_cobra(void)
     else if(direcao == CIMA) cobra.corpo[0].y++;
     else if(direcao == BAIXO) cobra.corpo[0].y--;
     
-    
-   if(verifica_colisao(&cobra))
+    if(verifica_colisao(&cobra))
 {
-    PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
-
-    atualizar_ranking(
-        ranking,
-        nome_jogador,
-        pontuacao);
-
-    salvar_ranking(ranking);
-
-    mostrar_ranking(ranking);
-
-    game_over = 1;
-
+    processa_game_over();
     return;
 }
-
-    
-    if(cobra.corpo[0].x >= COLUNAS || cobra.corpo[0].x < 0 ||
-   cobra.corpo[0].y >= LINHAS || cobra.corpo[0].y < 0)
+    if(cobra.corpo[0].x >= COLUNAS ||
+       cobra.corpo[0].x < 0 ||
+       cobra.corpo[0].y >= LINHAS ||
+       cobra.corpo[0].y < 0)
 {
-    PlaySound(TEXT("sons/colisao.wav"), NULL, SND_ASYNC | SND_FILENAME);
-
-    atualizar_ranking(
-        ranking,
-        nome_jogador,
-        pontuacao);
-
-    salvar_ranking(ranking);
-
-    mostrar_ranking(ranking);
-
-    game_over = 1;
-
+    processa_game_over();
     return;
 }
-
-
     if(cobra.corpo[0].x == comida_x && cobra.corpo[0].y == comida_y)
     {
         
@@ -191,7 +184,7 @@ void timer(int valor)
 }
 
 
-// -------- CONTROLES TECLADO E MOUSE --------
+// ---------------- CONTROLES TECLADO E MOUSE ----------------
 
 void teclado_especial(int tecla, int x, int y)
 {
@@ -233,7 +226,7 @@ void clique_mouse(int botao, int estado, int x, int y)
 }
 
 
-// -------- GRADE --------
+// ---------------- GRADE ----------------
 
 void desenha_grade(void)
 {
@@ -260,7 +253,7 @@ void desenha_grade(void)
 }
 
 
-// -------- TELA --------
+// ---------------- TELA ----------------
 
 void desenha(void)
 {
@@ -271,18 +264,72 @@ void desenha(void)
     glutSwapBuffers();
 }
 
-// -------- FUNÇÃO PRINCIPAL --------
+// ---------------- FUNÇÃO PRINCIPAL ----------------
 
 int main(int argc, char *argv[])
 {
-    //  CARREGAMENTO
+
+//  CARREGAMENTO
 
 carregar_config(&config);
 carregar_ranking(ranking);
 
-    //  MENU INICIAL 
+//  MENU INICIAL 
 
-    const char *rotulo[4] =
+while(1)
+{
+    printf("\n========================\n");
+    printf("      COBRINHA\n");
+    printf("========================\n\n");
+
+    printf("1 - Jogar\n");
+    printf("2 - Mostrar Ranking\n");
+    printf("3 - Resetar Ranking\n");
+    printf("4 - Sair\n\n");
+
+    if(!ler_inteiro(
+          "Opcao: ",
+          1,
+          4,
+          &opcao))
+    {
+        return 1;
+    }
+
+    if(opcao == 1)
+    {
+        break;
+    }
+
+    if(opcao == 2)
+    {
+        mostrar_ranking(ranking);
+
+        printf("\n");
+
+        continue;
+    }
+
+    if(opcao == 3)
+{
+    resetar_ranking(ranking);
+
+    printf("\n=================================\n");
+    printf("Ranking resetado com sucesso!\n");
+    printf("=================================\n\n");
+
+    mostrar_ranking(ranking);
+
+    continue;
+}
+
+    if(opcao == 4)
+    {
+        return 0;
+    }
+}
+
+const char *rotulo[4] =
 {
     "",
     "facil",
@@ -297,10 +344,6 @@ int velocidade_dificuldade[4] =
     160, // Velocidade da personalização de matricula
     120
 };
-
-printf("========================\n");
-printf("   COBRINHA - MENU\n");
-printf("========================\n");
 
 if(!ler_linha(
       "Nome do Jogador: ",

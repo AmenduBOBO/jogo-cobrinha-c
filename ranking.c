@@ -114,3 +114,18 @@ void mostrar_ranking(Jogador ranking[])
 
     printf("===================\n");
 }
+
+//////////////////////////////
+
+void resetar_ranking(Jogador ranking[])
+{
+    int i;
+
+    for(i = 0; i < 5; i++)
+    {
+        strcpy(ranking[i].nome, "---");
+        ranking[i].pontos = 0;
+    }
+
+    salvar_ranking(ranking);
+}

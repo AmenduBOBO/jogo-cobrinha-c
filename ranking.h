@@ -16,5 +16,6 @@ void atualizar_ranking(Jogador ranking[],
                        int pontos);
 
 void mostrar_ranking(Jogador ranking[]);
+void resetar_ranking(Jogador ranking[]);
 
 #endif
