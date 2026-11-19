@@ -11,7 +11,7 @@
 #include "config.h"
 #include "ranking.h"
 #include <string.h>
-
+#include "historico.h"
 
 
 // ---------------- DEFINES ----------------
@@ -114,6 +114,10 @@ void processa_game_over(void)
         TEXT("sons/colisao.wav"),
         NULL,
         SND_ASYNC | SND_FILENAME);
+
+    salvar_historico(
+        nome_jogador,
+        pontuacao);
 
     atualizar_ranking(
         ranking,
@@ -285,13 +289,14 @@ while(1)
     printf("1 - Jogar\n");
     printf("2 - Mostrar Ranking\n");
     printf("3 - Resetar Ranking\n");
-    printf("4 - Sair\n\n");
+    printf("4 - Mostrar Historico\n");
+    printf("5 - Sair\n\n");
 
     if(!ler_inteiro(
-          "Opcao: ",
-          1,
-          4,
-          &opcao))
+      "Opcao: ",
+      1,
+      5,
+      &opcao))
     {
         return 1;
     }
@@ -324,6 +329,15 @@ while(1)
 }
 
     if(opcao == 4)
+{
+    mostrar_historico();
+
+    printf("\n");
+
+    continue;
+}
+
+    if(opcao == 5)
     {
         return 0;
     }
