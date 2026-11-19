@@ -30,10 +30,11 @@ void salvar_historico(
 void mostrar_historico(void)
 {
     FILE *arquivo;
-
     char nome[16];
-
     int pontos;
+    int quantidade = 0;
+    int soma = 0;
+    int maior = 0;
 
     arquivo = fopen(
         "historico.txt",
@@ -51,17 +52,42 @@ void mostrar_historico(void)
         "\n===== HISTORICO =====\n");
 
     while(
-        fscanf(
-            arquivo,
-            "%15s %d",
-            nome,
-            &pontos) == 2)
+    fscanf(
+        arquivo,
+        "%15s %d",
+        nome,
+        &pontos) == 2)
+{
+    quantidade++;
+
+    soma += pontos;
+
+    if(pontos > maior)
     {
-        printf(
-            "%s - %d pontos\n",
-            nome,
-            pontos);
+        maior = pontos;
     }
+
+    printf(
+        "%s - %d pontos\n",
+        nome,
+        pontos);
+}
+printf("\n");
+
+printf(
+    "Partidas registradas: %d\n",
+    quantidade);
+
+printf(
+    "Maior pontuacao: %d\n",
+    maior);
+
+if(quantidade > 0)
+{
+    printf(
+        "Media de pontos: %d\n",
+        soma / quantidade);
+}
 
     printf(
         "=====================\n");
