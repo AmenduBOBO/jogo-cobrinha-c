@@ -1,5 +1,5 @@
-jose 1140
-toto 300
-dudu 280
-AMENDU 180
-pible 80
+amendu 80
+betu 60
+--- 0
+--- 0
+--- 0

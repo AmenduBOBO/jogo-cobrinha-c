@@ -40,10 +40,13 @@ C:\Users\JOSE BONARRIGO\Desktop\jogo-cobrinha-c
 PC:
 cd /c/Users/jose2/OneDrive/Desktop/jogo-cobrinha-c
 
-1-
+1- Add icone
+windres icone.rc -O coff -o icone.o
+
+2- Compilar
 gcc main.c cobra.c entrada.c config.c ranking.c historico.c -o snake.exe -lfreeglut -lopengl32 -lglu32 -lm -lwinmm
 
-2-
+3- iniciar
 ./snake.exe
 
 
