@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <string.h>
 #include "historico.h"
 
 void salvar_historico(
@@ -35,6 +35,7 @@ void mostrar_historico(void)
     int quantidade = 0;
     int soma = 0;
     int maior = 0;
+    char recordista[16] = "---";
 
     arquivo = fopen(
         "historico.txt",
@@ -63,9 +64,13 @@ void mostrar_historico(void)
     soma += pontos;
 
     if(pontos > maior)
-    {
-        maior = pontos;
-    }
+{
+    maior = pontos;
+
+    strcpy(
+        recordista,
+        nome);
+}
 
     printf(
         "%s - %d pontos\n",
@@ -82,6 +87,10 @@ printf(
     "Maior pontuacao: %d\n",
     maior);
 
+printf(
+    "Recordista: %s\n",
+    recordista);
+    
 if(quantidade > 0)
 {
     printf(
