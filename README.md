@@ -1,13 +1,13 @@
-[JOGO DA COBRINHA EM C]
+[ JOGO DA COBRINHA EM C ]
 Projeto desenvolvido para a disciplina Programação de Software Básico em C (ARA3327).
 
 
-[ALUNO]
-Nome: JOSE BONARRIGO
+[ ALUNO ]
+Nome: JOAO JOSE FURTADO BONARRIGO
 Matrícula: 202308970674
 
 
-[TECNOLOGIAS UTILIZADAS]
+[ TECNOLOGIAS UTILIZADAS ]
 
 - Linguagem C (C89)
 - OpenGL
@@ -18,13 +18,14 @@ Matrícula: 202308970674
 - GitHub
 
 
-[PERSONALIZAÇÃO DA MATRÍCULA]
+[ PERSONALIZAÇÃO DA MATRÍCULA ]
+
 Últimos dígitos da matrícula:
 
 A = 6 B = 7 C = 4
 
 
-[CONFIGURAÇÃO GERADA PELAS REGRAS DO TRABALHO]
+[ CONFIGURAÇÃO GERADA PELAS REGRAS DO TRABALHO ]
 
 Grade: 20 x 20
 Velocidade inicial: 160 ms
@@ -32,7 +33,7 @@ Cor da cobra: Laranja
 Pontos por comida: 20
 
 
-[COMO COMPILAR/EXECUTAR]
+[ COMO COMPILAR/EXECUTAR ]
 
 NOTEBOOK:
 C:\Users\JOSE BONARRIGO\Desktop\jogo-cobrinha-c
@@ -44,13 +45,13 @@ cd /c/Users/jose2/OneDrive/Desktop/jogo-cobrinha-c
 windres icone.rc -O coff -o icone.o
 
 2- Compilar
-gcc main.c cobra.c entrada.c config.c ranking.c historico.c -o snake.exe -lfreeglut -lopengl32 -lglu32 -lm -lwinmm
+gcc main.c cobra.c entrada.c config.c ranking.c historico.c icone.o -o snake.exe -lfreeglut -lopengl32 -lglu32 -lm -lwinmm
 
 3- iniciar
 ./snake.exe
 
 
-[CONTROLES]
+[ CONTROLES ]
 
 Setas = Mover a cobra
 P = Pausar
