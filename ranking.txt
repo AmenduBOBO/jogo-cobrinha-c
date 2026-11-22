@@ -1,5 +1,5 @@
+amendu 580
+tonin 420
 flavio 120
 amendu 80
 betu 60
---- 0
---- 0

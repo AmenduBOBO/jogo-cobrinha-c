@@ -26,6 +26,7 @@ void salvar_historico(
     fclose(arquivo);
 }
 
+//////////////////////////////
 
 void mostrar_historico(void)
 {

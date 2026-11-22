@@ -15,6 +15,7 @@ void inicializa_cobra(Cobra *c)
     c->corpo[2].y = 10;
 }
 
+//////////////////////////////
 
 int verifica_colisao(Cobra *c)
 {

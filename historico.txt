@@ -1,3 +1,9 @@
 betu 60
 amendu 80
 flavio 120
+robert 240
+thomas 20
+felix 0
+felix 80amendu 0
+amendu 580
+tonin 420
